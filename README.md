@@ -1,5 +1,7 @@
 # chipyard-env
 
+## Instructions
+
 This repo contains a `Dockerfile` for a container that builds [chipyard](https://github.com/ucb-bar/chipyard), an open-source framework for developing RISC-V chips using Chisel. 
 
 To build the Docker container, first clone the repository and navigate to it. Then:
@@ -22,3 +24,12 @@ Then you can synthesize designs in the chipyard repo. Below is an example for sy
 $ cd sims/verilator
 $ make CONFIG=SmallBoomConfig
 ```
+
+## Dockerhub
+
+The container is also pushed on Dockerhub, which may be more efficient than building it from scratch. To obtain: 
+```bash
+$ docker pull evanwilliams02/chipyard-env
+```
+
+Then you can source the setup script and synthesize designs as above. 
