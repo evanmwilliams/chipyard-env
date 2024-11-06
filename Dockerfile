@@ -17,8 +17,6 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-# Install chipyard
-
 # Install build tools
 RUN apt-get install -y \
     cmake ninja-build \
@@ -42,10 +40,6 @@ RUN apt-get update -y
 RUN apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
 RUN  apt-get install -y build-essential bison flex
 RUN  apt-get install -y libgmp-dev libmpfr-dev libmpc-dev zlib1g-dev vim git default-jdk default-jre
-# RUN echo "deb https://dl.bintray.com/sbt/debian /" |  tee -a /etc/apt/sources.list.d/sbt.list
-# COPY tmp.sh .
-# RUN sh -c ./tmp.sh
-# RUN curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add
 RUN  apt-get update
 RUN  apt-get install -y texinfo gengetopt
 RUN  apt-get install -y libexpat1-dev libusb-dev libncurses5-dev cmake
@@ -76,6 +70,7 @@ WORKDIR /riscv-gnu-toolchain
 RUN ./configure --prefix=/opt/riscv
 RUN make -j8 linux
 WORKDIR /root
+# install Conda
 RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 RUN bash Miniforge3-$(uname)-$(uname -m).sh -b
 RUN /bin/bash -c "source /root/miniforge3/bin/activate && conda init bash"
@@ -85,6 +80,7 @@ SHELL ["/bin/bash", "-c"]
 RUN conda install -n base conda-libmamba-solver
 RUN conda config --set solver libmamba
 RUN conda install -n base conda-lock==1.4.0
+# intall chipyard
 RUN git clone https://github.com/ucb-bar/chipyard.git
 WORKDIR /root/chipyard
 RUN git checkout 1.11.0
